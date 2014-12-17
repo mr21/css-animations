@@ -1,6 +1,22 @@
 ---
 ---
 
+/*
+	CSS - Windows8 - loading
+	https://github.com/Mr21/CSS-animations/tree/gh-pages/Windows8-loading
+*/
+
+/*
+	The required HTML :
+	<div class="windows8-loading">
+		<b></b>
+		<b></b>
+		<b></b>
+		<b></b>
+		<b></b>
+	</div>
+*/
+
 // Generics functions
 @mixin prop($prop, $value, $pref: null) {
 	@if $pref != null {
@@ -74,10 +90,8 @@ $delay: $delayTotal / ($nbDots - 1);
 @include keyframes(     -o-, windows8-loading_anim) { @include windows8-loading_anim(     -o-); }
 @include keyframes(      '', windows8-loading_anim) { @include windows8-loading_anim(      ''); }
 
-
 //@mixin windows8-loading_active3D($pr) {
 //	0%   { #{$pr}transform: translateZ(0px); }
 //	100% { #{$pr}transform: translateZ(1px); }
 //}
 //@include keyframes(  '-moz', windows8-loading_active3D) { @include windows8-loading_active3D(-moz-); }
-
