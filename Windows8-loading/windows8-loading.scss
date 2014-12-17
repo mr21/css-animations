@@ -1,0 +1,83 @@
+---
+---
+
+// Generics functions
+@mixin prop($prop, $value, $pref: null) {
+	@if $pref != null {
+		#{$pref}#{$prop}: #{$value};
+	} @else {
+		-webkit-#{$prop}: #{$value};
+		   -moz-#{$prop}: #{$value};
+		    -ms-#{$prop}: #{$value};
+		     -o-#{$prop}: #{$value};
+		        #{$prop}: #{$value};
+	}
+}
+@mixin keyframes($nav, $kfName) {
+	     @if $nav == -webkit- { @-webkit-keyframes #{$kfName} { @content; } }
+	@else if $nav == -moz-    {    @-moz-keyframes #{$kfName} { @content; } }
+	@else if $nav == -o-      {      @-o-keyframes #{$kfName} { @content; } }
+	@else                     {         @keyframes #{$kfName} { @content; } }
+}
+
+// Constantes
+$nbDots: 5;
+$p: .76;
+$durSec: 4;
+$delayTotal: $durSec - $durSec * $p;
+$delay: $delayTotal / ($nbDots - 1);
+
+/* CSS */
+.windows8-loading {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 50%;
+	//@include prop(animation, windows8-loading_active3D .2s infinite, -moz-); 
+
+	* {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		@include prop(animation, windows8-loading_anim #{$durSec}s infinite);
+			
+		@for $i from 2 through $nbDots {
+			&:nth-child(#{$i}) { @include prop(animation-delay, #{$delay * ($i - 1)}s); }
+		}
+		&:after {
+			content: "•";
+			position: absolute;
+			left: 50%;
+			margin-left: -.17em;
+			bottom: -.46em;
+			font: normal normal .7em sans-serif !important;
+		}
+	}
+}
+
+/* Animations */
+@mixin windows8-loading_anim($pr) {
+	0%                { #{$pr}transform: rotate(  0deg); #{$pr}animation-timing-function: ease-out; opacity: 1; }
+	#{$p*10}%         { #{$pr}transform: rotate(120deg); #{$pr}animation-timing-function: linear;   }
+	#{$p*10+$p*60/2}% { #{$pr}transform: rotate(240deg); #{$pr}animation-timing-function: ease-in;  }
+	#{$p*20+$p*60/2}% { #{$pr}transform: rotate(360deg); #{$pr}animation-timing-function: ease-out; }
+	#{$p*30+$p*60/2}% { #{$pr}transform: rotate(480deg); #{$pr}animation-timing-function: linear;   }
+	#{$p*30+$p*60}%   { #{$pr}transform: rotate(600deg); #{$pr}animation-timing-function: ease-in;  }
+	#{$p*100}%        { #{$pr}transform: rotate(720deg); opacity: 1; }
+	#{$p*100}.01%     { opacity: 0; }
+}
+@include keyframes(-webkit-, windows8-loading_anim) { @include windows8-loading_anim(-webkit-); }
+@include keyframes(   -moz-, windows8-loading_anim) { @include windows8-loading_anim(   -moz-); }
+@include keyframes(     -o-, windows8-loading_anim) { @include windows8-loading_anim(     -o-); }
+@include keyframes(      '', windows8-loading_anim) { @include windows8-loading_anim(      ''); }
+
+
+//@mixin windows8-loading_active3D($pr) {
+//	0%   { #{$pr}transform: translateZ(0px); }
+//	100% { #{$pr}transform: translateZ(1px); }
+//}
+//@include keyframes(  '-moz', windows8-loading_active3D) { @include windows8-loading_active3D(-moz-); }
+
