@@ -47,9 +47,10 @@ $delay: $delayTotal / ($nbDots - 1);
 .windows8-loading {
 	position: relative;
 	display: inline-block;
-	vertical-align: middle;
 	width: 1.5em;
 	height: 1.5em;
+	vertical-align: middle;
+	text-align: left;
 	border-radius: 50%;
 	//@include prop(animation, windows8-loading_active3D .2s infinite, -moz-); 
 
